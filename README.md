@@ -1,5 +1,7 @@
 # Kubernetes Pod Resource Management Demo
 
+![loader example](demo/loader.jpeg)
+
 ## Overview
 
 This project is designed to demonstrate the concepts of pod resource management in Kubernetes. It is an educational tool that showcases how to monitor and manage CPU and memory resources for applications running in a Kubernetes cluster. The project includes two main components: a loader application that simulates resource usage and a load manager application with a web UI for controlling the load on the loader.
