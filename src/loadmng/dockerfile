@@ -1,0 +1,14 @@
+FROM python:3.8-slim
+
+WORKDIR /app
+
+COPY load_manager.py /app
+COPY templates/ /app/templates/
+
+RUN pip install --no-cache-dir flask requests kubernetes
+
+EXPOSE 5001
+
+ENV NAME LoadManager
+
+CMD ["python", "load_manager.py"]

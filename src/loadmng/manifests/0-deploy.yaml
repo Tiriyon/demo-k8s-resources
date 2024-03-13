@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loadmanager
+  labels:
+    app: loadmanager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: loadmanager
+  template:
+    metadata:
+      labels:
+        app: loadmanager
+    spec:
+      serviceAccountName: loadmanager-sa
+      containers:
+      - name: loadmanager
+        image: tiriyon/loadmanager:latest
+        ports:
+        - containerPort: 5001
+

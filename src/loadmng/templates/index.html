@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Load Manager</title>
+</head>
+<body>
+    <h1>Load Manager</h1>
+    <form method="post">
+        <input type="checkbox" name="cpu" id="cpu">
+        <label for="cpu">CPU Load</label><br>
+        <label for="memory">Memory Load (MB):</label>
+        <input type="number" name="memory" id="memory" value="0"><br>
+        <input type="submit" value="Update Load">
+    </form>
+    <form method="post" action="/reset">
+        <input type="submit" value="Reset">
+    </form>
+</body>
+</html>
