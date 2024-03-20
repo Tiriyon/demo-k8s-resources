@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect
 import requests
 from kubernetes import client, config
+from threading import Thread
 
 app = Flask(__name__)
 
@@ -18,18 +19,40 @@ def index():
 def update_load(cpu_load, memory_load):
     v1 = client.CoreV1Api()
     pods = v1.list_namespaced_pod(namespace="default", label_selector="app=loader")
+
+    threads = []
     for pod in pods.items:
         url = f"http://{pod.status.pod_ip}:5000/load"
         payload = {'cpu': cpu_load, 'memory': memory_load}
-        requests.post(url, json=payload)
+
+        # Create a new thread for each request
+        thread = Thread(target=lambda: requests.post(url, json=payload))
+        threads.append(thread)
+        thread.start()
+
+    # Wait for all threads to complete
+    for thread in threads:
+        thread.join()
+
 
 @app.route('/reset', methods=['POST'])
 def reset():
     v1 = client.CoreV1Api()
     pods = v1.list_namespaced_pod(namespace="default", label_selector="app=loader")
+
+    threads = []
     for pod in pods.items:
         url = f"http://{pod.status.pod_ip}:5000/reset"
-        requests.post(url)
+
+        # Create a new thread for each request
+        thread = Thread(target=lambda: requests.post(url))
+        threads.append(thread)
+        thread.start()
+
+    # Wait for all threads to complete
+    for thread in threads:
+        thread.join()
+
     return redirect('/')
 
 if __name__ == '__main__':

@@ -5,7 +5,7 @@ metadata:
   labels:
     app: loader
 spec:
-  replicas: 5
+  replicas: 30
   selector:
     matchLabels:
       app: loader
@@ -16,6 +16,17 @@ spec:
     spec:
       containers:
       - name: loader
-        image: tiriyon/loader:latest
+        image: tiriyon/loader:t0.0.8
+        resources:
+          requests:
+            cpu: "300m"
+            memory: "150Mi"
+          limits:
+            cpu: "350m"
+            memory: "200Mi"
         ports:
         - containerPort: 5000
+        env:
+        - name: MEMORY_LIMIT_MB
+          value: "190"
+

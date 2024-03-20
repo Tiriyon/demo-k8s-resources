@@ -17,7 +17,7 @@ spec:
       serviceAccountName: loadmanager-sa
       containers:
       - name: loadmanager
-        image: tiriyon/loadmanager:latest
+        image: tiriyon/loadmanager:v0.0.3
         ports:
         - containerPort: 5001
 
